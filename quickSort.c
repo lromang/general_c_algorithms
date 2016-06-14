@@ -95,30 +95,39 @@ void init_qs(int* a, int length){
 
 int main(){
   // Declaración de variables.
-  int length, i;
+  int length, i, print_l;
   int* array;
-  time_t t;
+  time_t t, start, finish;
 
   printf("Ingrese longitud del arreglo.\n");
   scanf("%d", &length);
+  printf("-------------------\n");
+  printf("Ingrese longitud de impresión.\n");
+  scanf("%d", &print_l);
   printf("-------------------\n");
   // Inicialización de variables.
   array = (int*)malloc(length*sizeof(int));
   srand((unsigned) time(&t));
 
   // Construcción del arreglo.
-  printf("Arreglo ordenado\n");
   for(i=0; i < length; i++){
     array[i] = rand() % length;
-    printf("%d\n", array[i]);
+    if(i < print_l){
+      printf("%d ",array[i]);
+    }
   }
-  printf("------------------\n");
-  printf("Arreglo ordenado con qs\n");
-  // Ordenamiento del arreglo con qs.
+  // Ordenamiento del arreglo con QS.
+  start = clock();
   init_qs(array, length);
-  for(i=0; i < length; i++){
-    printf("%d\n", array[i]);
+  finish = clock();
+  // Tiempo ejecución.
+  printf("\n-------------------\n");
+  printf("Tiempo de ejecución: %fl", ((double)(finish - start))/CLOCKS_PER_SEC);
+  // Impresión arreglo
+  printf("\n-------------------\n");
+  printf("Elementos ordenados: \n");
+  for(i = 0; i < print_l; i++){
+      printf("%d ",array[i]);
   }
-
   return 0;
 }
